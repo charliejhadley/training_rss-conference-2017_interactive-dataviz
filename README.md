@@ -17,6 +17,10 @@ Click on "Clone or download" and select "Download as ZIP". Ensure to unzip the f
 
 <img src="/download-repo.png" width="400">
 
+# About the instructor
+
+The instructor for this course is [Martin John Hadley](https://www.linkedin.com/in/martinjohnhadley/).
+
 # License
 
 These training materials have the following license: Attribution-NonCommercial-NoDerivatives 4.0 International
