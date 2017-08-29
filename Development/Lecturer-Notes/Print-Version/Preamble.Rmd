@@ -1,0 +1,295 @@
+---
+title: "Creating Interactive Visualisations Using R and Shiny"
+output: pdf_document
+css: "www/printingnotes.css"
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(fig.width=10, fig.height=6, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+## Course Overview
+
+This course is designed as a broad overview of how presentations and interactive content can be built using the R language and R Markdown.
+
+
+No prior knowledge of R is expected, however this course will **NOT** provide a sufficient overview of the R language to start analysing data and doing useful stuff.
+
+
+>* This course shows you how to make Shiny stuff.
+
+## Scope of Course
+
+This course will introduce the necessary skills to build interactive elements similar to the following examples from the [shiny.rstudio.com](http://shiny.rstudio.com) gallery.
+
+```{r, echo=FALSE,eval=FALSE}
+## Example copied from http://shiny.rstudio.com/gallery/tabsets.html
+## All rights reserved
+shinyApp(
+  ui = fluidPage(
+    
+  # Application title
+  titlePanel("Tabsets"),
+  
+  # Sidebar with controls to select the random distribution type
+  # and number of observations to generate. Note the use of the
+  # br() element to introduce extra vertical spacing
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons("dist", "Distribution type:",
+                   c("Normal" = "norm",
+                     "Uniform" = "unif",
+                     "Log-normal" = "lnorm",
+                     "Exponential" = "exp")),
+      br(),
+      
+      sliderInput("n", 
+                  "Number of observations:", 
+                   value = 500,
+                   min = 1, 
+                   max = 1000)
+    ),
+    
+    # Show a tabset that includes a plot, summary, and table view
+    # of the generated distribution
+    mainPanel(
+      tabsetPanel(type = "tabs", 
+        tabPanel("Plot", plotOutput("plot")), 
+        tabPanel("Summary", verbatimTextOutput("summary")), 
+        tabPanel("Table", tableOutput("table"))
+      )
+    )
+  )
+),
+server = function(input, output) {
+  
+  # Reactive expression to generate the requested distribution.
+  # This is called whenever the inputs change. The output
+  # functions defined below then all use the value computed from
+  # this expression
+  data <- reactive({
+    dist <- switch(input$dist,
+                   norm = rnorm,
+                   unif = runif,
+                   lnorm = rlnorm,
+                   exp = rexp,
+                   rnorm)
+    
+    dist(input$n)
+  })
+  
+  # Generate a plot of the data. Also uses the inputs to build
+  # the plot label. Note that the dependencies on both the inputs
+  # and the data reactive expression are both tracked, and
+  # all expressions are called in the sequence implied by the
+  # dependency graph
+  output$plot <- renderPlot({
+    dist <- input$dist
+    n <- input$n
+    
+    hist(data(), 
+         main=paste('r', dist, '(', n, ')', sep=''))
+  })
+  
+  # Generate a summary of the data
+  output$summary <- renderPrint({
+    summary(data())
+  })
+  
+  # Generate an HTML table view of the data
+  output$table <- renderTable({
+    data.frame(x=data())
+  })
+  
+},
+options = list(height = 500, width = "100%")
+)
+```
+
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/tabset-Shiny-Gallery-example.png")
+ grid.raster(img)
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
+  "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
+## Example copied from http://shiny.rstudio.com/gallery/kmeans-example.html
+## All rights reserved
+shinyApp(
+ui = pageWithSidebar(
+  headerPanel('Iris k-means clustering'),
+  sidebarPanel(
+    selectInput('xcol', 'X Variable', names(iris)),
+    selectInput('ycol', 'Y Variable', names(iris),
+                selected=names(iris)[[2]]),
+    numericInput('clusters', 'Cluster count', 3,
+                 min = 1, max = 9)
+  ),
+  mainPanel(
+    plotOutput('plot1')
+  )
+),
+server = (function(input, output, session) {
+
+  # Combine the selected variables into a new data frame
+  selectedData <- reactive({
+    iris[, c(input$xcol, input$ycol)]
+  })
+
+  clusters <- reactive({
+    kmeans(selectedData(), input$clusters)
+  })
+
+  output$plot1 <- renderPlot({
+    par(mar = c(5.1, 4.1, 0, 1))
+    plot(selectedData(),
+         col = clusters()$cluster,
+         pch = 20, cex = 3)
+    points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
+  })
+})
+)
+```
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/iris-clustering-Shiny-Gallery-Example.png")
+ grid.raster(img)
+```
+
+
+## Scope of Course
+
+The very basics of using supplementary packages for creating Shiny apps with highly interactive charts (ie. pan, zoom and tooltips) will be introduced.
+
+```{r, echo=FALSE, eval=FALSE}
+## Example from http://shiny.rstudio.com/gallery/movie-explorer.html
+## All rights reserved
+library(shiny)
+library(plotly)
+library(ggplot2movies)
+minx <- min(movies$rating)
+maxx <- max(movies$rating)
+shinyApp(
+  ui = fluidPage(
+  titlePanel("Movie Ratings!"),
+  sidebarPanel(
+    sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 10)
+  ),
+  mainPanel(
+    plotlyOutput("trendPlot")
+  )
+),
+  server = function(input, output) {
+
+  output$trendPlot <- renderPlotly({
+    # size of the bins depend on the input 'bins'
+    size <- (maxx - minx) / input$bins
+
+    # a simple histogram of movie ratings
+    p <- plot_ly(movies, x = rating, autobinx = F, type = "histogram",
+                 xbins = list(start = minx, end = maxx, size = size))
+    # style the xaxis
+    layout(p, xaxis = list(title = "Ratings", range = c(minx, maxx), autorange = F,
+                           autotick = F, tick0 = minx, dtick = size))
+  })
+},
+options = list(height = 500, width = "100%")
+)
+```
+
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/movie-ratings-Shiny-Gallery-Example.png")
+ grid.raster(img)
+```
+
+
+The course does not cover the development of this type of applications:
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/EMLO-Screenshot.png")
+ grid.raster(img)
+```
+
+
+## Course Materials and Structure
+
+The lecturer notes for this course have been written in R Markdown and will be provided to you at the end of the course.
+
+
+There are a number of exercise files provided for you on the desktop in the folder "R and Shiny".
+
+
+The course will cover the following topics:
+
+
+>* The R Language
+>* RStudio
+>* R Markdoown
+>* RPub
+>* Shiny
+
+## The R Language
+
+R is a scripting language and a very powerful tool for data analysis and presentation, primarily due to the huge user base and their dedication to developing free and open source libraries/packages covering a vast range of different knowledge domains:
+
+
+- Regression
+- Machine Learning
+- Image Analysis
+- Network Analysis
+
+<p>
+
+The Comprehensive R Archive Network [(CRAN)](cran.r-project.org) is the canonical repository for R packages, note that almost all* packages hosted on CRAN may be used within a Shiny app.
+
+
+*\*Packages dependent on parallal or distributed computing are unlikely to be supported, contact shinyapps-support@rstudio.com with any questions*
+
+## Learning R
+
+Oxford provides a variety of courses on R in the [ITLP Catalog](http://courses.it.ox.ac.uk), if there are additional courses you would like to see run please do ask!
+
+
+Oxford also provides access to [lynda.com](http://lynda.com) for all staff and students at the University, Lynda provides training material on a whole host of programming languages and analytical techniques.
+
+
+[Datacamp.com](datacamp.com) is a tool for learning the R language and analytical techniques directly in the browser - note that a subscription is required to access some content.
+
+## Getting Help
+
+[Stackoverflow](http://stackoverflow.com/) is the Q&A community for programming and scripting, this is a good place to start when trying to solve a problem. Note that the community may see abrasive to new users, the following advice is useful to prevent feeling like your fingers have been snapped off:
+
+- Search for a solution before asking a question
+- Provide a [reproducible example of your problem](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
+
+## The R Console
+
+R is the name of the programming language and *console* within which many users of R write and evaluate their code.
+
+To use R on your local machine you must [download](https://cran.r-project.org/bin/windows/base/) and install the R Console, it's available on Windows, OS X and Linux.
+
+Like all consoles, this application provides (only) the following functionality:
+
+<div class="row">
+  <div class="col-md-6">
+- Write code and script files
+- Evaluate code and script files
+  </div>
+  <div class="col-md-6">
+<img src="images/RConsole.png" width = "100%"/>
+  </div>
+</div>
+

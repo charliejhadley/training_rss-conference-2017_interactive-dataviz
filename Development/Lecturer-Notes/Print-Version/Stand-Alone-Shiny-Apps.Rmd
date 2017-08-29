@@ -1,0 +1,57 @@
+---
+title: "Stand Alone Shiny Apps"
+output: pdf_document
+css: "www/printingnotes.css"
+---
+
+## Split File Shiny Apps
+
+In this course we have only considered how to build Shiny apps directly within an RMarkdown chunk, however this is only really applicable for small-scale Shiny apps.
+
+These apps we've been building could be considered "self-contained" as they are written in a single call to the `shinyApp` function, large scale apps are developed across at least two files:
+
+- ui.R
+
+- server.R
+
+This "split-file" Shiny app setup allows for much greater "separation of concerns" and make development (and reuse) of an application easier. 
+
+## Embedding "Split File" Shiny Apps into Presentations
+
+There are two methods of emebedding split file apps into RMarkdown presentations:
+
+>- `shinyAppDir`: requires the entire RMarkdown document to be in the shiny runtime, i.e. shinyapps.io active hours are consumed while anywhere in the presentation
+
+>- iframes: allows a shinyapps.io hosted Shiny app to be embedded into a single (or many) slides without the rest of the app requiring Shiny active hours to display
+
+## Layout of Split Files
+
+The ui.R and server.R files for a split file Shiny App must be contained within the same directory, and have the following structure
+
+```{r, echo=TRUE, eval=FALSE}
+## ui.R
+library(plotly) # You must load libraries into the ui.R file when they are used in client-side interactions; this includes all libraries for interactive charts
+shinyUI(
+  fluidPage(
+    ...,
+  )
+)
+```
+
+```{r, echo=TRUE, eval=FALSE}
+## server.R
+library(plotly) # You must load libraries into the server.R file when they are used in server-side interactions; in general every package your app is dependent on must be loaded here
+shinyServer(function(input, output){
+  ...,
+  })
+```
+
+## Loading local files into split file apps
+
+This is largely beyond the scope of this course, however it is useful to have some advisory rules:
+
+- CSS and JavaScript should be kept in the `www` sub-directory of the app
+- Images should be kept in the `images` sub-directory of the app
+- All paths must be given relative to the ui.R and server.R folder (the root directory of the app)
+
+Note that ALL files in the Shiny app directory will be uploaded to shinyapps.io if you choose to deploy your app there.

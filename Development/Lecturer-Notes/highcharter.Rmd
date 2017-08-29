@@ -1,0 +1,152 @@
+---
+title: "Highcharter"
+output: 
+  slidy_presentation
+runtime: shiny
+css: "www/teachingnotes.css"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	eval = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	include = TRUE
+)
+```
+
+## Highcharter and Highcharts JS
+
+Highcharter utilises the Highcharts JS library to create beautifully, very minimal charts. It's my personal favourite option for creating simple charts.
+
+However, it comes with a huge disclaimer:
+
+```{r, eval=TRUE, message=TRUE, warning=TRUE}
+library("highcharter")
+```
+
+## Highcharter licensing
+
+For more information about licensing, see https://shop.highsoft.com/highcharts.
+
+It should be noted that the Highcharts company really like the `highcharter` library, they even provide a discount on Single Developer licenses to users of the library: http://announcements.highcharts.com/foss/.
+
+## Highcharter compared to plotly and leaflet
+
+`highcharter` is different from `plotly` and `leaflet` in that it doesn't use the ~ syntax to access columns.
+
+There are two very different ways to create 
+
+<div class="col-md-6">
+**Charts from scratch**
+
+- Instantiate a highcharter object with `highchart`
+- Add series with `hc_add_series` 
+- Ensure column names within `hc_add_series` are consistent with the Highchart JS library's requirements.
+
+</div>
+
+<div class="col-md-6">
+**Charts with magic**
+
+- Provide a tibble to the `hchart` function
+- Specify the chart aesthetics using `hcaes`
+- Provide column names as "naked variables"
+
+</div>
+
+We're going to use the magic of `hchart` in this course, but I'll refer you to documentation for the more explicit process of building `highcharter` charts later.
+
+## Highcharter and Gapminder (I)
+
+Let's create the same chart we created previously, but in highcharter:
+
+```{r}
+library("tidyverse")
+library("gapminder")
+library("highcharter")
+continent_mean_pop_growth <- gapminder %>%
+  group_by(continent, year) %>%
+  summarise(mean.pop = mean(pop))
+continent_mean_pop_growth %>%
+  hchart(
+    type = "line"
+  )
+```
+
+## Highcharter and the journeys dataset (I)
+
+Let's load up the highcharter-and-the-journey.RProj project from RSS_handouts folder, there's a file here that processes our data ready to be visualised using a bar chart.
+
+```{r, echo=FALSE, eval=TRUE}
+library("tidyverse")
+library("forcats")
+library("highcharter")
+
+journeys <- read_csv("data/detailed-journeys.csv")
+
+end_location_frequencies <- journeys %>%
+  group_by(end.city, end.country) %>%
+  count() %>%
+  arrange(desc(n)) %>%
+  ungroup() %>%
+  mutate(end.city = fct_reorder(end.city, n))
+
+end_location_frequencies %>%
+  hchart(
+    type = "bar",
+    hcaes(
+      x = end.city,
+      y = n
+    )
+  )
+```
+
+## Highcharter and the journeys dataset (II)
+
+In `plotly` we coloured each city according to the country it belonged to, we could naively achieve this in `highcharter` as follows:
+
+```{r, eval=TRUE}
+end_location_frequencies %>%
+  hchart(
+    type = "bar",
+    hcaes(
+      x = end.city,
+      y = n,
+      group = TRUE
+    )
+  )
+```
+
+Unfortunately, `highcharter` is far too clever for its own good and splits the data into two groups.
+
+The simplest method to fix this is as follows:
+
+```{r, eval = TRUE}
+end_location_frequencies %>%
+  # mutate(color = ifelse(end.country == "DEU", "#440154", "#21908C")) %>%
+  mutate(position = row_number() - 1) %>%
+  hchart(
+    type = "bar",
+    hcaes(
+      x = position,
+      y = n,
+      group = end.country
+    )
+  ) %>%
+  hc_xAxis(categories = end_location_frequencies$end.city)
+```
+
+## Highcharter and the journeys dataset (III)
+
+The solution provided before isn't perfect, as noted by the package author here: [https://github.com/jbkunst/highcharter/issues/230#issuecomment-268715227](https://github.com/jbkunst/highcharter/issues/230#issuecomment-268715227).
+
+This highlights nicely a lesson you must learn with htmlwidgets; create a priority list for the features of a chart, and accept there will be trade-offs to chasing particular functionalities.
+
+## Learning more about highcharter
+
+There's an excellent website managed by the package developer here: [http://jkunst.com/highcharter/](http://jkunst.com/highcharter/).
+
+The package is also deliberately designed to be as close to the underlying Highcharts JS library as possible, I therefore recommend you consult the API documentation for advanced features: [http://api.highcharts.com/highcharts](http://api.highcharts.com/highcharts)
+
+

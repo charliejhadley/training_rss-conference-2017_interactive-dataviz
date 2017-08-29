@@ -1,0 +1,58 @@
+---
+title: "Exercises: Shiny Basics (Publishing)"
+output: pdf_document
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- # ```{r, message=FALSE, warning=FALSE, include=FALSE} -->
+<!-- # knitr::opts_chunk$set(echo = FALSE) -->
+<!-- # library(leaflet) -->
+<!-- # ``` -->
+<!-- #  -->
+\begin{center}
+\section{Exercises: Shiny Basics (Publishing)}
+\end{center}
+
+# Overview of Exercise
+
+These exercises will take you through the steps necessary to connect your RStudio installation to your shinyapps.io account.
+
+# Exercise 1
+
+1.1 Sign up for an account at [www.shinyapps.io/admin/#/signup](http://www.shinyapps.io/admin/#/signup)
+
+1.2 Choose an appropriate account name (this will be the "slug" for your shiny apps, i.e. http://fancyslug.shinyapps.io/myShinyApp)
+
+1.3 Follow the steps on the website:
+
+1.3.1 install.packages("rsconnect")
+
+1.3.2 Copy your account info to the clipboard
+
+1.3.3 Open RStudio's preferences, navigate to "Publishing" and click "connect"
+
+```{r fig.width=2, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/connect_shinyapps-io.png")
+ grid.raster(img)
+```
+
+1.3.4 Paste your account info into the dialog window.
+
+1.4. If these steps have worked, you should be able to publish the shiny app you created in the previous exercise by clicking on the "Publish" button.
+
+# Exercise 2
+
+Login to your shinyapps.io and investigate how you might achieve the following:
+
+- View overall active hours across all applications
+- Modify the timeout period for your shiny app
+- Archive your app
+- Download a copy of the shiny app from the server
+
+
+
+

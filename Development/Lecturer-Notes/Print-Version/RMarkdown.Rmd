@@ -1,0 +1,126 @@
+---
+title: "R Markdown"
+output: pdf_document
+css: "www/printingnotes.css"
+---
+
+## What is Markdown?
+
+## What is Markdown?
+
+Markdown is a very simple and widely used markup language - it allows documents to be described and then generated through an interpreter.
+
+R Markdown allows the specification of documents (reports, presentations, etc) which include both code and evaluated code output - let's discuss the types of RMarkdown document before introducing the basic syntax and starting some exercises.
+
+## Types of R Markdown
+
+There are three types of RMarkdown output
+
+<center><img src="images/RMarkdown-documents.png" width = "500px" alt = RMarkdown-Documents/></center>
+
+- PDF files are useful for when writing academic reports, lecture notes or other material that must be printed
+- HTML files are useful when wanting to share your content online, perhaps via RPubs which will be discussed later
+- Generating word files from RMarkdown is beyond the scope of this course
+
+## Presentations with RMarkdown
+
+This course focuses on presentations rather than reports, as reports are traditionally printed materials that wouldn't be suitable for interactive Shiny apps.
+
+There are three types of presentations you can create:
+
+```{r fig.width=6,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/output-types.png")
+ grid.raster(img)
+```
+
+
+## RPubs
+
+[RPubs.com](rpubs.com) is a free and open platform for publishing and sharing HTML RMarkdown documents with others.
+
+RPubs and Shiny are both maintained by the team behind RStudio and are fully integrated into the IDE.
+
+Note that while documents hosted on RPubs are made public, the underlying code/.rmd files cannot be downloaded by others.
+
+## Markdown Syntax
+
+There are many different flavours of Markdown but they all share the same basic syntax, which can be spit into the following types of actions:
+
+- Laying out documents
+
+- Formatting Text
+
+- Including images and hyperlinks
+
+- Include code and code output
+
+## Laying out documents
+
+The preamble of RMarkdown documents specifies the overall layout of the document (i.e. slidy or ioslides), the only other layout directly controllable with Markdown is *headings*
+
+\# Heading
+
+\#\# Subheading (New Slide)
+
+\#\#\# Subsubheading
+
+## Formatting Text
+
+Basic text formatting is achieved using syntax that you may have used in other text editors, or in comment sections on websites:
+
+\*italics\*
+
+\*\*bold\*\*
+
+Bullet point and enumerated lists are also added easily:
+
+\- Bullet point 1
+
+\- Bullet point 2
+
+1. First Numbered Item
+
+2. Second Numbered Item
+
+It's important to remember that as your text is first interpreted as code, rather than text to display, it's necessary to "escape" characters that would otherwise be interpreted - for instance \\\*this isn't italic\\\*
+
+## URLS and Images
+
+URL links are simply written as
+
+`[text to show](http://google.com)`
+
+Images can be embedded into RMarkdown documents from the web or from your local machine - the exercises will introduce you to the relative filepaths necessary to include local files
+
+`!(image)[image-link]`
+
+## HTML for Power Users
+
+Markdown is great for quickly specifying your document/presentation layout, but it is not designed to be flexible or extensible - it's a minimal set of instructions for styling your content.
+
+If you're generating HTML from RMarkdown it's possible to simply write HTML directly in your .rmd files.
+
+Slidy and ioslides both utilise the Bootstrap CSS so it's easy to include responsive content in your presentations.
+
+## Code Chunks
+
+Code can be inserted into RMarkdown files in one of two ways: inline or as code chunks.
+
+Code to be shown (but not evaluated) is written as \` 2+2 \` - to evaluate code use \` r 2+2 \`
+
+Code chunks are deliminated as follows:
+
+<center><img src="images/CodeChunk.png" width = "418px" alt = Beamer/></center>
+
+## Naming Chunks and Chunk Options
+
+Naming code chunks make it easier to diagnose issues with the knitting of your RMarkdown documents into HTML or PDF files.
+
+Chunk names are given as follows:
+
+<center><img src="images/Named-Code-Chunks.png" width = "418px" alt = Beamer/></center>
+
+## Exercises (10 mins)
+

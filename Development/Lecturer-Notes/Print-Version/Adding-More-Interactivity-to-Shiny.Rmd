@@ -1,0 +1,105 @@
+---
+title: "Adding More Interactivity to Shiny"
+output: pdf_document
+css: "www/printingnotes.css"
+---
+
+```{r, echo=F, message=FALSE, warning=FALSE}
+suppressWarnings(require(leaflet))
+```
+
+
+## Warnings about Shiny
+
+- Controller variables can only be used once in a shiny app - `sliderInput("thisVar", ...)` only one slider can be created in the app that uses `input$thisVar`
+
+- Duplicate output cannot be used in shinyApps, it will create errors. So you cannot have multiple instances of `plotOutput("myFancyPlot")` in your app
+
+## Interactive Data Visualisations
+
+So far we've built a Shiny app with interactive elements, but not interactive charts. But *all* htmlwidget-dependent interactive elements can be inserted into Shiny apps.
+
+Many of the htmlwidget-dependent libraries have built in Shiny integration - allowing actions (like clicking) inside of a chart to be communicated to the Shiny server code.
+
+## Leaflet in Shiny
+
+The following Shiny app uses Leaflet:
+
+```{r, echo = FALSE, eval=FALSE}
+shinyApp(
+  ui = fluidPage(
+    sidebarLayout(
+      sidebarPanel(
+    sliderInput("latitutde", label = "Latitude", min = 5, max = 8, value = 6.9),
+    sliderInput("longitude", label = "Longtidue", min = 15, max = 19, value = 17.7),
+    sliderInput("sd", label = "Standard Deviation of Points", min = 5, max = 20, value = 10),
+    selectInput("mapType", label = "Map Type:", choices = c("OpenStreetMap", "OpenStreetMap.BlackAndWhite","OpenTopoMap"))
+    ),
+    mainPanel(
+    leafletOutput("africa_map")
+  ))),
+  server = function(input, output) {
+    
+    africa_data_points <- reactive({data.frame(
+      lat = rnorm(100, mean = input$latitutde, sd = input$sd),
+      lng = rnorm(100, mean = input$longitude, sd = input$sd),
+      size = runif(100, 5, 10),
+      popup = as.character(1:100)
+    )})
+    
+    output$africa_map <- renderLeaflet({
+      
+      africa_data_points <- africa_data_points()
+    
+      m <- leaflet(africa_data_points) %>%
+        addProviderTiles(input$mapType)
+      m %>% addCircleMarkers(radius = ~size, popup = ~popup)
+      
+    })
+  },options = list(height = "700px")
+)
+```
+
+
+```{r, echo=F}
+library(png)
+library(grid)
+img <- readPNG("images/htmlwidgets_africa_map.png")
+ grid.raster(img)
+```
+
+
+## Reactivity
+
+Building interactive elements with Shiny is incredibly simple, the difficulty arises in controlling that interactivity - when and how things update.
+
+In the Shiny framework interactivity is achieved through `reactive` expressions which essentially invalidate one another, by moving a slider you are updating a variable which invalidates the dependent output resulting in re-evaluation.
+
+## Reactivity
+
+The simplest demonstration of reactive expressions is provided by this example:
+
+```{r, eval=F, echo=F}
+shinyApp(
+  ui = fluidPage(
+    sliderInput("a", label = "a", min = 1, max = 5, value = 2),
+    textInput("b", label = "b", value = "x axis"),
+    plotOutput("hist")
+  ),
+  
+  server = function(input, output){
+    
+    output$hist <- renderPlot(
+      hist(rnorm(1000, mean = input$a), xlab = input$b)
+    )
+    
+  }
+)
+```
+
+```{r, echo=F}
+library(png)
+library(grid)
+img <- readPNG("images/htmlwidgets_africa_map.png")
+ grid.raster(img)
+```

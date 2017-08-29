@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "## Data is obtained from https://doi.org/10.6084/m9.figshare.3425729.v5\n## Note that \n\ndownload.file(url = \"https://ndownloader.figshare.com/files/5360972\",\n              destfile = \"data-raw/desktop-surveys.csv\")",
+    "created" : 1503664767117.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2577964239",
+    "id" : "E2241BED",
+    "lastKnownWriteTime" : 1503669943,
+    "last_content_update" : 1503669943127,
+    "path" : "~/Google Drive/VisibleData/RSS/2017/RSS-2017-Conference/OxfordIDN-Training-Interactive-Viz-with-R/RSS_handouts/plotly-desktop-items/data-raw/obtain-data.R",
+    "project_path" : "data-raw/obtain-data.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

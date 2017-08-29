@@ -1,0 +1,15 @@
+<p>
+This RMarkdown file has access to the data structures within the `server.R` environment because it is knitted together within the `server.R` file and then displayed in the `ui.R` file via `htmlOutput`.
+</p>
+
+<p>
+For instance, the number mean population of capital cities is `r mean(capital_cities$city.population,na.rm = T)` and the mean population of countries is `r mean(capital_cities$country.population,na.rm = T)`.
+</p>
+
+<p>
+Note that is advisable not to lean on RMarkdown files too much for combining text, images and htmlwidgets. There are a number of steps in the conversion of this *butchered* .Rmd file to display in your app. Observe that actual real HTML is required to format content, we can't simply use # to deliminate headings etc.
+</p>
+
+<p>
+For further guidance on building complex shiny apps, refer to <a href="https://ox-it.github.io/OxfordIDN_Shiny-App-Templates/">ox-it.github.io/OxfordIDN_Shiny-App-Templates/</a>
+</p>

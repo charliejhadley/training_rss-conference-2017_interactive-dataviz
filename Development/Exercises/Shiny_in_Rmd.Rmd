@@ -1,0 +1,152 @@
+---
+title: "Exercises: Basic shinyApp and shinyapps.io"
+output: pdf_document
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=10, fig.height=6, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+\begin{center}
+\section{Exercises: Basic shinyApp and shinyapps.io}
+\end{center}
+
+
+# Overview of Exercises
+
+These exercises take you through the steps to write shinyApps within your RMarkdown presentations.
+
+# Exercise 1: Drawing Curves
+
+1. Presentation setup:
+
+1.1. Create a new project for these exercises - name it appropriately.
+
+1.2. Create a new Slidy presentation file in your project
+
+1.3. Change the first slide title to "Drawing Curves" and insert a new code chunk in which you'll write your shinyApp
+
+1.4 Add `runtime: shiny` to the preamble of the presentation
+
+2. Copy and paste the template for a Shiny app into your code chunk
+
+```{r, echo=TRUE, eval=FALSE}
+library(shiny)
+shinyApp(
+  ui = ,
+  server = function(input, output){
+    
+  }
+)
+```
+
+3. Add a fluidPage to the ui argument which contains the following arguments:
+
+3.1 sliderInput with the following parameters:
+
+- inputId = "exponent"
+- label = "exponent"
+- min = 1
+- max = 5
+- value 2
+
+3.2 A wellPanel that contains text explaining what the slider is for
+
+3.3 Knit your presentation together - you should see something like this
+
+```{r, eval=F, echo=F}
+library(shiny)
+shinyApp(
+  ui = fluidPage(
+    wellPanel("This is a slider"),
+    sliderInput("exponent", label = "exponent",
+                min = 1,
+                max = 5,
+                value = 2)
+  ),
+  server = function(input, output){
+    
+  }
+)
+```
+
+```{r fig.width=2, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/BasicShiny.png")
+ grid.raster(img)
+```
+
+4. In the server function define a new variable for the output object (i.e. output$myThing) and assign it the following:
+
+4.1 renderPlot
+
+4.2 `curve(x^2, from = -5, to = 5)`
+
+5. Add `plotOutput` to the ui argument and provide it the output object you defined above, knit together - you should have the following
+
+```{r, eval=F, echo=F}
+library(shiny)
+shinyApp(
+  ui = fluidPage(
+    wellPanel("This is a slider"),
+    sliderInput("exponent", label = "exponent",
+                min = 1,
+                max = 5,
+                value = 2),
+    plotOutput("myThing")
+  ),
+  server = function(input, output){
+    output$myThing <- renderPlot({
+      curve(x^2, from = -5, to = 5)
+    })
+  }
+)
+```
+
+```{r fig.width=2, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/BasicShiny-2.png")
+ grid.raster(img)
+```
+
+6. Modify the `curve` expression to be dependent on the input variable defined in `selectInput`
+
+7. Knit together the presentation, the slider should update the plot now.
+
+# Exercise 2: Registering a shinyapps.io account
+
+Publishing the shiny enabled presentation requires a shinyapps.io account - this is easy to set up.
+
+Knit the presentation file and select "publish" in the top-right of the window, you'll be presented with this dialog - select "Get started here"
+
+```{r fig.width=2, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/Register-Shiny.png")
+ grid.raster(img)
+```
+
+Register for an account - it's free. Choose an appropriate account name, this can be changed later but will require all your shiny apps to be re-deployed.
+
+```{r fig.width=2, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/Shiny-account-name.png")
+ grid.raster(img)
+```
+
+Navigate to Account -> Tokens and select "Show" at shinyapps.io to expose your secret token, copy and paste this into RStudio.
+
+```{r fig.width=2, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/Shiny-Token.png")
+ grid.raster(img)
+```
+
+Provide the shiny app with a name (this will be the URL for the shiny app - it therefore cannot contain spaces or anything else that is *unsafe* in URLs) and press "Publish" - your app will then be deployed to the web and your browser opened when it's finished.
+
+

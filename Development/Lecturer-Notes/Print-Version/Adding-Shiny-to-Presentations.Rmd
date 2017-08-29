@@ -1,0 +1,134 @@
+---
+title: "Adding Shiny to Presentations"
+output: pdf_document
+css: "www/printingnotes.css"
+---
+
+## Shiny and shinyapps.io
+
+Shiny is an R package that allows interactive HTML elements to be generated (and *rendered*) from interpreted R code.
+
+To display Shiny content in a webpage the R code must be interpreted by a Shiny-enabled server - [shinyapps.io](http://www.shinyapps.io) provides this as a service.
+
+However it is very simply to interact with Shiny apps on your local machine without relying on such services. In the exercises you'll create your own shinyapps.io account and upload a Shiny app to the web, but for the next few slides we'll consider only what you need to do to build an interactive Shiny app on your local machine.
+
+## First Shiny App
+
+To use shiny it's necessary to install the shiny library as follows, and make sure that it is "loaded" using the `library` function
+
+```{r, show_installing_shiny, echo=TRUE, eval=FALSE}
+install.packages("shiny")
+library(shiny)
+```
+
+The following interactive app will now be built by your lecturer and the mechanics of it explained.
+
+```{r, exponent_curve_example, echo=FALSE, eval=FALSE}
+shinyApp(
+  ui = fluidPage(
+    sliderInput("exponent", min = 1, max = 5, step = 1, value = 1, label = "Exponent"),
+    plotOutput("curvePlot")
+  ),
+  server = function(input, output){
+    output$curvePlot <- renderPlot({
+      curve(x^input$exponent, from = -5, to = 5)
+    })
+  }
+)
+```
+
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/curve-shiny-app.png")
+ grid.raster(img)
+```
+
+
+## Why UI and Server?
+
+Shiny apps are split into two sections - the UI and server side code.
+
+It's important to understand what Shiny does - it provides a way to write a HTML GUI (i.e. HTML and JavaScript) in R code and provides a framework for a browser displaying a Shiny app to exchange information with a Shiny server.
+
+The app is therefore split into client-side and server-side code - or shinyUI and shinyServer. Fundamentally, the UI is only aware of "values" (or data) from the server assigned to the output object.
+
+## Exercises (15mins)
+
+## Bootstrap and Shiny apps
+
+[Bootstrap](http://getbootstrap.com/) is an incredibly powerful and flexible framework for making "responsive web elements" - content that resizes (or transforms) dependent on the window size of your browser.
+
+The following interface is built entirely within Shiny using the following layout tools:
+
+- navbarPage
+
+- navbarMenu
+
+- tabsetPanel
+
+```{r, bootstrap_shiny, echo=FALSE, eval=FALSE}
+library(shiny)
+shinyApp(
+  ui = navbarPage(
+    "navbarMenu Example",
+    tabPanel("fluidPage",
+             fluidPage(
+               sliderInput("number.of.data", label = "Number of Data", min = 200, max = 1000, value = 500),
+               plotOutput("hist.1")
+             ))
+    ,
+    navbarMenu("navbarMenu",
+                tabPanel("tabsetPanel", 
+                         fluidPage(
+                           sidebarLayout(
+                             sidebarPanel(sliderInput("number.of.data", label = "Number of Data", min = 200, max = 1000, value = 500)),
+                             mainPanel(tabsetPanel(
+                               tabPanel("Histogram",
+                                        plotOutput("hist.2")),
+                               tabPanel("Other",
+                                        "Other")
+                             ))
+                           )
+                         )
+                         ),
+                tabPanel("Child 2", "foobar")),
+    collapsible = TRUE
+  ),
+  server = function(input, output){
+    
+    data.for.histogram <- reactive({
+      rnorm(n = input$number.of.data, mean = 0, sd = 2)
+    })
+    
+    output$hist.1 <- renderPlot({
+      
+      data <- data.for.histogram()
+      
+      hist(data)
+    })
+    
+     output$hist.2 <- renderPlot({
+      
+      data <- data.for.histogram()
+      
+      hist(data)
+    })
+  }, options = list(width = "100%", height = "800px")
+)
+```
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/navbarPage-Shiny.png")
+ grid.raster(img)
+```
+
+
+## Exercises (10mins)
+
+
+
+

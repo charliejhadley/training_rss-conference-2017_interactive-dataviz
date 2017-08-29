@@ -1,0 +1,11 @@
+---
+title: "Getting help with R"
+output: html_document
+---
+
+## Getting Help
+
+[Stackoverflow](http://stackoverflow.com/) is the Q&A community for programming and scripting, this is a good place to start when trying to solve a problem. Note that the community may see abrasive to new users, the following advice is useful to prevent feeling like your fingers have been snapped off:
+
+- Search for a solution before asking a question
+- Provide a [reproducible example of your problem](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)

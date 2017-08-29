@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "shinyApp(\n  ui = fluidPage(wellPanel(uiOutput(\"depth_slider_UI\")),\n                 leafletOutput(\"my_map\")),\n  server = function(input, output) {\n    output$depth_slider_UI <- renderUI({\n      sliderInput(\n        \"quake_depth\",\n        \"Depth\",\n        min = 40,\n        max = 100,\n        value = 50\n      )\n      \n    })\n    \n    observeEvent(input$quake_depth,\n                 {\n                   my_quakes <- quakes %>%\n                     filter(depth <= input$quake_depth)\n                   \n                   pal_quakes <- colorNumeric(\"Purples\", quakes$mag)\n                   \n                   leafletProxy(\"my_map\") %>%\n                     clearMarkers() %>%\n                     removeControl(\"legend\") %>% \n                     addCircleMarkers(\n                       data = my_quakes,\n                       stroke = TRUE,\n                       fillColor = ~ pal_quakes(mag),\n                       color = \"#000000\"\n                     ) %>%\n                     addLegend(pal = pal_quakes,\n                               values = my_quakes$mag,\n                               opacity = 1,\n                               layerId = \"legend\")\n                   \n                 })\n    \n    output$my_map <- renderLeaflet({\n      leaflet() %>%\n        addTiles()\n      \n    })\n    \n  }\n)",
+    "created" : 1503671145752.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "3502936365",
+    "id" : "56947605",
+    "lastKnownWriteTime" : 4294967302,
+    "last_content_update" : 1503996994685,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

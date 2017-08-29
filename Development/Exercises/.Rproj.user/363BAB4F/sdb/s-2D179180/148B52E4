@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Exercises: Laying out Shiny Apps\"\noutput: pdf_document\n---\n\n```{r global_options, include=FALSE}\nknitr::opts_chunk$set(fig.width=10, fig.height=6, fig.path='Figs/',\n                      echo=FALSE, warning=FALSE, message=FALSE)\n```\n\n\\begin{center}\n\\section{Exercises: Laying out Shiny Apps}\n\\end{center}\n\n\n# Overview of Exercises\n\nThese exercises introduce the various options available to you in laying out Shiny apps and consolidate the shiny app syntax.\n\nYou could reasonably continue within the same project as the last set of exercises.\n\n# Exercise 1: sidebarLayout\n\n1.1 Continue with the code from the last exercise, or simply duplicate and start a new project\n\n1.2 Add a `sidebarLayout` to the `ui.R` file such that the slider you created (and the selected map coordinates, if completed) are shown to the left of map.\n\n# Exercise 2: tabsetPanel\n\n2.1 Add a `tabsetPanel` into the shiny app, with the leaflet map in the first tab.\n\n2.2 Add a second `htmlwidget` (using a different library) from the earlier set of examples into the second tab of the `tabsetPanel`.\n\n2.3 Publish the shiny app to the web - ensure that it works!\n\n\n# Exercise 3: navbarPage\n\n3.1 Replace the fluidPage with a `navbarPage`, ensure the page with the `tabsetPanel` you've just created is shown when the app first loads.\n\n3.2 Add a second tab to the `navbarPage` called \"About\" and add some \"lorem ipsum\" about the app.\n\n3.3 You can republish this again for a sense of accomplishment, but previous requests to \"publish and ensure it works!\" are designed to ensre you've not missed out an important step. If you have a the `navbarPage` displaying correctly on your machine, congratulations I think you're ahead of the majority of people who have tried to use Shiny before!\n\n",
+    "created" : 1477046375221.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2627004165",
+    "id" : "148B52E4",
+    "lastKnownWriteTime" : 1477211317,
+    "last_content_update" : 1477211317018,
+    "path" : "~/Google Drive/Career/Oxford Uni/Live Data Project/Training Courses/Creating interactive visualisations using R and Shiny/October2016/Exercises/Shiny-Layouts.Rmd",
+    "project_path" : "Shiny-Layouts.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

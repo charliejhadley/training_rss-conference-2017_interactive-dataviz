@@ -1,0 +1,101 @@
+---
+title: "htmlwidgets"
+output: pdf_document
+css: "www/printingnotes.css"
+---
+
+## htmlwidgets: JavaScript
+
+The interactive web is driven by JavaScript*, the majority of interactive elements that you use on websites are written in JavaScript - from interactive maps to auto-completing pop-up menus. 
+
+```{r, fig.height=10, echo=F, eval=F}
+library(shiny)
+library(leaflet)
+shinyApp(
+  ui = fluidPage(
+    sidebarLayout(
+      sidebarPanel(
+    sliderInput("latitutde", label = "Latitude", min = 5, max = 8, value = 6.9),
+    sliderInput("longitude", label = "Longtidue", min = 15, max = 19, value = 17.7),
+    sliderInput("sd", label = "Standard Deviation of Points", min = 5, max = 20, value = 10),
+    selectInput("mapType", label = "Map Type:", choices = c("OpenStreetMap", "OpenStreetMap.BlackAndWhite","OpenTopoMap"))),
+    mainPanel(
+    leafletOutput("africa_map")
+  ))),
+  server = function(input, output) {
+    
+    output$africa_map <- renderLeaflet({
+      
+      africa_data_points = data.frame(
+      lat = rnorm(100, mean = input$latitutde, sd = input$sd),
+      lng = rnorm(100, mean = input$longitude, sd = input$sd),
+      size = runif(100, 5, 10),
+      popup = as.character(1:100)
+    )
+    
+      m <- leaflet(africa_data_points) %>%
+        addProviderTiles(input$mapType)
+      m %>% addCircleMarkers(radius = ~size, popup = ~popup)
+      
+    })
+  },options = list(height = "100%")
+)
+
+```
+
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/htmlwidgets_africa_map.png")
+ grid.raster(img)
+```
+
+## htmlwidgets: The Framework
+
+Like in R, there are hundreds of different JavaScript libraries dedicated to various visualisation tasks. 
+
+<p>
+
+There is a package called `htmlwidgets` that allows R developers to easily build bindings to JavaScript libraries, allowing incredibly rich interactive content for the web to be built just with the R language.
+
+## htmlwidgets: The Packages
+
+These bindings to JavaScript libraries are typically distributed as individual R packages; an individual R package for an individual JavaScript library. The <a href="http://htmlwidgets.org">htmlwidgets.org</a> website provides a showcase of some of the `htmlwidget` dependent bindings that are available through CRAN.
+
+```{r, echo=T, eval = F}
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=174.768, lat=-36.852, popup="The birthplace of R")
+m
+```
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/htmlwidgets_africa_map.png")
+ grid.raster(img)
+```
+
+```{r, message=FALSE, warning=FALSE, eval=F}
+library(visNetwork)
+suppressWarnings(library(igraph))
+igraph_network <- graph.famous("Walther")
+data <- toVisNetworkData(igraph_network)
+visNetwork(nodes = data$nodes, edges = data$edges) %>%
+  visNodes(color = list(background = "red", 
+                        border = "darkblue",
+                        highlight = "yellow")) %>%
+  visEdges(color = list(color = "red"))
+```
+
+
+```{r fig.width=4,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/htmlwidgets_visNetwork.png")
+ grid.raster(img)
+```
+
+
+## Exercises (20mins)

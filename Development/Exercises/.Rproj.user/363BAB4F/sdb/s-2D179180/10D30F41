@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: 'Exercises: Shiny Basics (htmlwidgets)'\noutput: pdf_document\n---\n\n```{r, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\n```\n\n<!-- # ```{r, message=FALSE, warning=FALSE, include=FALSE} -->\n<!-- # knitr::opts_chunk$set(echo = FALSE) -->\n<!-- # library(leaflet) -->\n<!-- # ``` -->\n<!-- #  -->\n\\begin{center}\n\\section{Exercises: Shiny and htmlwidgets}\n\\end{center}\n\n# Overview of exercises\n\nThis collection of exercises is designed to introduce the basics of incorporating `htmlwidgets` into your shiny apps.\n\n\n# Exercise 1: Shiny Africa Map\n\nPreviously you created a leaflet map that looks something like the image below, we're going to create a Shiny app with an embedded Leaflet map - which means you will need to load these libraries in RStudio.\n\n```{r fig.width=2, fig.height=10,echo=FALSE}\nlibrary(png)\nlibrary(grid)\nimg <- readPNG(\"images/leaflet-africa-data-plot.png\")\ngrid.raster(img)\n```\n\n1.1 Create the shell of a shiny app from the template provided to you (a ui.R and server.R file)\n\n1.2 Add the `leaflet` map generating code into the `server.R` file such that an output object will be created, that renders the map appropriately.\n\n1.3 Display the map in the `ui.R` file using an appropriate function.\n\n1.4 In the ui.R include the following controller:\n\n- A slider that is allowed to move between 5 and 20, labelled \"Standard Deviation\"\n\n1.5 Modify the `server.R` code such that changing the slider value changes the standard deviation of the `lat` and `lng` coordinates displayed, ensure that changing the slider affects the output map as you would expect.\n\n1.6 Publish the shiny app to the web - ensure that it works!\n\n# Exercise 2: Selected marker\n\nFor this exercise you will need to refer to [http://rstudio.github.io/leaflet/](http://rstudio.github.io/leaflet/)\n\n2.1 In the `server.R` file create a new output UI element that will display the latitude and longitude coordinates of your selected points\n\n2.2 Add appropriate code to the `ui.R` file such that this output object will be displayed.\n\n2.3 Publish the shiny app to the web - ensure that it works!",
+    "created" : 1477046352420.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2064332303",
+    "id" : "10D30F41",
+    "lastKnownWriteTime" : 1477208951,
+    "last_content_update" : 1477208951029,
+    "path" : "~/Google Drive/Career/Oxford Uni/Live Data Project/Training Courses/Creating interactive visualisations using R and Shiny/October2016/Exercises/ShinyBasics_htmlwidgets.Rmd",
+    "project_path" : "ShinyBasics_htmlwidgets.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

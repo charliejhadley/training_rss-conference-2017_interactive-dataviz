@@ -1,0 +1,62 @@
+---
+title: 'Exercises: Shiny renderUI'
+output: pdf_document
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- # ```{r, message=FALSE, warning=FALSE, include=FALSE} -->
+<!-- # knitr::opts_chunk$set(echo = FALSE) -->
+<!-- # library(leaflet) -->
+<!-- # ``` -->
+<!-- #  -->
+
+\begin{center}
+\section{Exercises: Shiny renderUI}
+\end{center}
+
+# Overview of Exercises
+
+These exercises consolidat your understanding of reactivity and the overall communication of variables between the `ui.R` and `server.R` components of a shiny app
+
+Use one project to contain all of these exercises, there are skeleton templates in the `shiny_renderUI` folder you'll find useful.
+
+# Exercise 1
+
+1.1 Add a slider with the following specification, ensure the slider displays correctly before "plugging it in" to the `leaflet` map
+
+- Label: Capital City population size
+- Min: Minimum capital city population size
+- Max: Maximum capital city population size
+- Default values: 25% and 75% quartiles of the capital city population sizes
+
+1.2 Ensure that the capital cities are now filtered according to this slider
+
+# Exercise 2
+
+2.1 Add a slider with the following specification, ensure the slider displays correctly before "plugging it in" to the `leaflet` map.
+- Label: Modification date
+- Min: Earliest modification date
+- Max: Most recent modification date
+- Default values: 25% and 75% quartiles of the modification dates
+
+2.2 Ensure that the capital cities are now filtered according to this slider
+
+
+# Exercise 3
+
+3.1 Generate a ui element in `server.R` that displays a warning in a `wellPanel` if no capital cities match your filter conditions.
+
+3.2 Display this warning where you wish in the app.
+
+# Exercise 4
+
+It would be best for the "no data points!" warning to simply replace the map, as it most definitely signifies to the the user that there is no available data.
+
+There are a few different methods you could use to conditionally show the wellPanel instead of the leaflet map, consult the documentation here http://shiny.rstudio.com/reference/shiny/latest/ for a potential method, but also consider whether you may be able to write a reactive ui element to achieve this.
+
+
+
+

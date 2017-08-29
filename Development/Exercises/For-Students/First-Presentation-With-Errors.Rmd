@@ -1,0 +1,28 @@
+---
+title: "First Presentation with Errors"
+output: slidypresentation
+---
+
+## Literature Overview
+
+The iris dataset is used frequently to demonstrate how R works, or a particular analytical technique, the dataset has measurements for `r nrow[iris]` different fish in it.
+
+
+## Summarising Iris
+
+This is the standard scatter plot used for testing the performance of clustering algorithms.
+
+```{r iris_plot}
+plot(iris$Petal.Length, iris$Petal.Width, pch=21, 
+     bg=c("red","green3","blue")[unclass(iris$Species)], 
+     main="Edgar Anderson's Iris Data")
+```
+
+
+The distribution of fish across the species can be displayed as follows, note that the distribution is shown as a percentage:
+
+```{r iris-species-table}
+100*table(iris$Species)/nrow(Iris)
+```
+
+
