@@ -9,6 +9,14 @@ Details about the training course are available here: https://events.rss.org.uk/
 - An installation of R [https://cran.r-project.org/](https://cran.r-project.org/)
 - An installation of RStudio [https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/)
 
+# Working with these materials
+
+During the course you will need the materials in this repository ([https://github.com/martinjhnhadley/training_rss-conf-2017](https://github.com/martinjhnhadley/training_rss-conf-2017)). Here's a short URL [https://goo.gl/JskxNH](https://goo.gl/JskxNH).
+
+Click on "Clone or download" and select "Download as ZIP". Ensure to unzip the folders to a convenient location.
+
+<img src="/download-repo.png" width="400">
+
 # License
 
 These training materials have the following license: Attribution-NonCommercial-NoDerivatives 4.0 International
