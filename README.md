@@ -2,6 +2,8 @@
 
 These training materials are made available for attendees of the Interactive Visualisation (with R) pre-conference course offered to RSS Conference 2017 attendees.
 
+Details about the training course are available here: https://events.rss.org.uk/rss/frontend/reg/thome.csp?pageID=31864&eventID=105&eventID=105
+
 # What you need to start
 
 - An installation of R [https://cran.r-project.org/](https://cran.r-project.org/)
