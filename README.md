@@ -11,7 +11,7 @@ Details about the training course are available here: https://events.rss.org.uk/
 
 # Working with these materials
 
-During the course you will need the materials in this repository ([https://github.com/martinjhnhadley/training_rss-conf-2017](https://github.com/martinjhnhadley/training_rss-conf-2017)). Here's a short URL [https://goo.gl/JskxNH](https://goo.gl/JskxNH).
+During the course you will need the materials in this repository ([https://github.com/martinjhnhadley/training_interactive-viz-with-R_RSS](https://github.com/martinjhnhadley/training_interactive-viz-with-R_RSS)). Here's a short URL [https://goo.gl/WX3xwA](https://goo.gl/WX3xwA).
 
 Click on "Clone or download" and select "Download as ZIP". Ensure to unzip the folders to a convenient location.
 
