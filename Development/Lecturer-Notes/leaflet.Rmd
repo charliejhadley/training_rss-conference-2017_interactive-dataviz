@@ -1,8 +1,8 @@
 ---
 title: "Leaflet"
-output: 
-  slidy_presentation
-runtime: shiny
+output:
+  slidy_presentation:
+    theme: default
 css: "www/teachingnotes.css"
 ---
 

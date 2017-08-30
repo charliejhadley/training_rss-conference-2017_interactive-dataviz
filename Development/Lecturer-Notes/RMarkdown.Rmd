@@ -1,14 +1,16 @@
 ---
 title: "R Markdown"
-output: slidy_presentation
+output:
+  slidy_presentation:
+    theme: default
 css: "www/teachingnotes.css"
 ---
 
-# Literate programming
+## Literate programming
 
 Literate programming environments try to minimise the potential for undocumented/write-only code by providing a simple method of combining text, images and other output to completely explain the function of the code alongside the code.
 
-# Literate programming: RMarkdown
+## Literate programming: RMarkdown
 
 RStudio provides an amazing literate programming environment in the form of RMarkdown. A simple document-orientated approach to coding that allows even htmlwidgets to be included directly alongside code.
 
@@ -22,7 +24,7 @@ There are three different kinds of document that can be created with RMarkdown:
 
 All of the materials for this training course were written in RMarkdown.
 
-# What is Markdown?
+## What is Markdown?
 
 Markdown is a very simple and widely used markup language created by John Gruber - it allows documents to be described and then generated through an interpreter.
 
@@ -40,7 +42,7 @@ There are many different flavours of Markdown but they all share the same basic 
 
 Every *flavour* of Markdown has slightly different implementations, before we get into the specifics of "RMarkdown" let's create a document that allows us to generate output from RMarkdown.
 
-# Presentations with RMarkdown
+## Presentations with RMarkdown
 
 This course focuses on presentations rather than reports, as I think it's quite exciting to be able to include interactive content within data-driven presentations. 
 
@@ -65,19 +67,19 @@ There are three types of presentations you can create:
   Contents can be shown by pressing the C key.</div>
 </div>
 
-# Template documents
+## Template documents
 
 No matter which document type you choose, you'll find yourself with a template documet that looks very much like this:
 
 <img src="images/rmarkdown-template-markup.png" width = "100%" alt = Slidy/>
 
-# Evaluating code chunks while writing
+## Evaluating code chunks while writing
 
 When writing your presentations, you will want to run your code to ensure that it works. By default, RMarkdown documents behave very differently from R script files:
 
 <img src="images/rmarkdown-code-chunk-output.png" width = "100%" alt = Slidy/>
 
-# Formatting text in RMarkdown
+## Formatting text in RMarkdown
 
 Basic text formatting is achieved using syntax that you may have used in other text editors, or in comment sections on websites:
 
@@ -97,7 +99,7 @@ Bullet point and enumerated lists are also added easily as follows:
 
 It's important to remember that as your text is first interpreted as code, rather than text to display, it's necessary to "escape" characters that would otherwise be interpreted - for instance \\\*this isn't italic\\\*
 
-# URLS and Images
+## URLS and Images
 
 URL links are simply written as
 
@@ -107,7 +109,7 @@ Images can be embedded into RMarkdown documents from the web or from your local 
 
 `![image](image-link)`
 
-# HTML for Power Users
+## HTML for Power Users
 
 Markdown is great for quickly specifying your document/presentation layout, but it is not designed to be flexible or extensible - it's a minimal set of instructions for styling your content.
 
@@ -133,41 +135,62 @@ Slidy and ioslides both utilise the Bootstrap CSS framework so it's easy to incl
 
 </div>
 
-# htmlwidgets in RMarkdown
+## htmlwidgets in RMarkdown (I)
 
-Provided that your RMarkdown document is a HTML document, it's fairly easy to include htmlwidgets in your documents.
+htmlwidgets can fairly easily be embedded into RMarkdown documents, however there are some things to be wary of.
 
-However, there are some pitfalls. A fairly annoying one concerns leaflet maps, below is a fairly
+For instance, the zoom buttons in leaflet maps unfortunately result in a slidy presentation changing slides:
 
 ```{r, eval=TRUE, message=FALSE, warning=FALSE}
-library(leaflet)
-library(widgetframe)
-l <- leaflet(height=300) %>% addTiles() %>% setView(0,0,1)
+library("leaflet")
+quakes %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers()
+```
+
+## htmlwidgets in RMarkdown (II)
+
+Sometimes there are simple modifications you can make to htmlwidgets to make them play nicely with your slides, like dropping the zoom controls:
+
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
+quakes %>%
+  leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+  addTiles() %>%
+  addCircleMarkers()
+```
+
+## htmlwidgets in RMarkdown (III)
+
+There's a package called `widgetframe` which is designed to make it easier to embed htmlwidgets into RMarkdown documents (and other places) without conflicts between the presentation and the iframe which contains the widget itself.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+library("leaflet")
+library("widgetframe")
+l <- quakes %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers()
 frameWidget(l)
 ```
 
-# My Example
-
-```{r, eval=FALSE, message=FALSE, warning=FALSE}
-library("tidyverse")
-library("leaflet")
-library("statesRcontiguous")
-library("widgetframe")
-states_leaflet <- shp_all_us_states %>%
-  filter(contiguous.united.states == TRUE) %>%
+```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(leaflet)
+library(widgetframe)
+l <- quakes %>%
   leaflet() %>%
-  addProviderTiles(providers$Thunderforest) %>%
-  addPolylines()
-frameWidget(states_leaflet)
+  addTiles() %>%
+  addCircleMarkers()
+l
 ```
 
-# RPubs
+## Publishing with RPubs
 
-[RPubs.com](rpubs.com) is a free and open platform for publishing and sharing HTML RMarkdown documents with others.
+[RPubs.com](rpubs.com) is a free and open platform for publishing and sharing HTML RMarkdown documents/presentations with others.
 
-RPubs and Shiny are both maintained by the team behind RStudio and are fully integrated into the IDE.
+Its's incredibly simple to publish to RPubs - simply click on the publish button:
+
+<img src="images/rpubs-publish-workflow.png" width = "100%" alt = Slidy/>
 
 Note that while documents hosted on RPubs are made public, the underlying code/.rmd files cannot be downloaded by others.
-
-# Exercises (20 mins)
 

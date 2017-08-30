@@ -1,0 +1,65 @@
+---
+title: "Exercises: Shiny Basics (Basic)"
+output: pdf_document
+---
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- # ```{r, message=FALSE, warning=FALSE, include=FALSE} -->
+<!-- # knitr::opts_chunk$set(echo = FALSE) -->
+<!-- # library(leaflet) -->
+<!-- # ``` -->
+<!-- #  -->
+
+\begin{center}
+\section{Exercises: Shiny Basics}
+\end{center}
+
+# Overview of Exercises
+
+This exercise is designed to consolidate the very fundamentals of a shiny app and the syntax required. They are minimal examples of what Shiny is capable of.
+
+Use the same project for both exercises.
+
+# Exercise 1
+
+1.1 Create a project (refer back to the notes in the RMarkdown section of the course if necessary) containing both a ui.R and server.R file, you may find it useful to use the template files provided to you.
+
+1.2 If you followed along with the instructors live-coding example, use the code from there. Otherwise you will need to add the following to your files:
+
+ui:
+
+```{r, eval=FALSE,echo=TRUE}
+plotOutput("curvePlot")
+```
+
+server:
+
+```{r, eval = FALSE, echo=TRUE}
+output$curvePlot <- renderPlot({
+    curve(x,
+          from = -5,
+          to = 5)
+  })
+```
+
+1.3 Add a `sliderInput` to the ui that will allow users to change a value from 1 to 5, with a default value of 3. Refer to the documentation or http://shiny.rstudio.com/reference/shiny/latest/ as necessary.
+
+1.4 Modify the server so that the curve(x^slider) is generated
+
+1.5 Run the app and ensure it works.
+
+# Exercise 2
+
+2.1 Add a control to the Shiny app you built before that allows you to type your name
+
+2.2 Use the "main" argument of `curve` to provide your name as the title of the plot
+
+2.3 Use the paste function to combine the your name with the current value of the exponent, for instance: "Plot of x^4 (by Johanna Smith)"
+
+```{r, eval=F,echo=TRUE}
+paste("this", "that")
+```
+

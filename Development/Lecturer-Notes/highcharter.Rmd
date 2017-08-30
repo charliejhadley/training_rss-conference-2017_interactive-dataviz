@@ -1,8 +1,8 @@
 ---
 title: "Highcharter"
-output: 
-  slidy_presentation
-runtime: shiny
+output:
+  slidy_presentation:
+    theme: default
 css: "www/teachingnotes.css"
 ---
 
@@ -37,6 +37,7 @@ It should be noted that the Highcharts company really like the `highcharter` lib
 
 There are two very different ways to create 
 
+<div class="row">
 <div class="col-md-6">
 **Charts from scratch**
 
@@ -54,7 +55,9 @@ There are two very different ways to create
 - Provide column names as "naked variables"
 
 </div>
+</div>
 
+<br>
 We're going to use the magic of `hchart` in this course, but I'll refer you to documentation for the more explicit process of building `highcharter` charts later.
 
 ## Highcharter and Gapminder (I)
@@ -77,6 +80,8 @@ continent_mean_pop_growth %>%
 ## Highcharter and the journeys dataset (I)
 
 Let's load up the highcharter-and-the-journey.RProj project from RSS_handouts folder, there's a file here that processes our data ready to be visualised using a bar chart.
+
+Now let's create this chart using highcharter:
 
 ```{r, echo=FALSE, eval=TRUE}
 library("tidyverse")
@@ -113,7 +118,7 @@ end_location_frequencies %>%
     hcaes(
       x = end.city,
       y = n,
-      group = TRUE
+      group = end.country
     )
   )
 ```
@@ -124,7 +129,6 @@ The simplest method to fix this is as follows:
 
 ```{r, eval = TRUE}
 end_location_frequencies %>%
-  # mutate(color = ifelse(end.country == "DEU", "#440154", "#21908C")) %>%
   mutate(position = row_number() - 1) %>%
   hchart(
     type = "bar",

@@ -1,7 +1,8 @@
 ---
 title: "R, RStudio and Tidyverse Stack"
-output: slidy_presentation
-runtime: shiny
+output:
+  slidy_presentation:
+    theme: default
 css: "www/teachingnotes.css"
 ---
 

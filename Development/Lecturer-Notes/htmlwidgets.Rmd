@@ -1,14 +1,17 @@
 ---
 title: "htmlwidgets"
-output: 
-  slidy_presentation
+output:
+  slidy_presentation:
+    theme: default
 runtime: shiny
 css: "www/teachingnotes.css"
 ---
 
 ## htmlwidgets: JavaScript
 
-The interactive web is driven by JavaScript*, the majority of interactive elements that you use on websites are written in JavaScript - from interactive maps to auto-completing pop-up menus. 
+The interactive web is driven by JavaScript*.
+
+The majority of interactive elements that you use on websites are written in JavaScript - from interactive maps to auto-completing pop-up menus. 
 
 ```{r, echo=F}
 library(shiny)
@@ -49,13 +52,14 @@ shinyApp(
 
 Like in R, there are hundreds of different JavaScript libraries dedicated to various visualisation tasks. 
 
-There is a package called `htmlwidgets` that allows R developers to easily build bindings to JavaScript libraries, allowing incredibly rich interactive content for the web to be built just with the R language.
+There is a package called `htmlwidgets` that allows R developers to easily build bindings to JavaScript libraries, allowing incredibly rich interactive content for the web to be built using just the R language.
 
 ## htmlwidgets: The Packages
 
 These bindings to JavaScript libraries are typically distributed as individual R packages
 
 - An individual R package for an individual JavaScript library. 
+
 
 The <a href="http://htmlwidgets.org">htmlwidgets.org</a> website provides a showcase of some of the `htmlwidget` dependent bindings that are available through CRAN.
 

@@ -1,0 +1,57 @@
+---
+title: 'Exercises: Shiny Basics (htmlwidgets)'
+output: pdf_document
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- # ```{r, message=FALSE, warning=FALSE, include=FALSE} -->
+<!-- # knitr::opts_chunk$set(echo = FALSE) -->
+<!-- # library(leaflet) -->
+<!-- # ``` -->
+<!-- #  -->
+\begin{center}
+\section{Exercises: Shiny and htmlwidgets}
+\end{center}
+
+# Overview of exercises
+
+This collection of exercises is designed to introduce the basics of incorporating `htmlwidgets` into your shiny apps.
+
+
+# Exercise 1: Shiny Africa Map
+
+Previously you created a leaflet map that looks something like the image below, we're going to create a Shiny app with an embedded Leaflet map - which means you will need to load these libraries in RStudio.
+
+```{r fig.width=2, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("images/leaflet-africa-data-plot.png")
+grid.raster(img)
+```
+
+1.1 Create the shell of a shiny app from the template provided to you (a ui.R and server.R file)
+
+1.2 Add the `leaflet` map generating code into the `server.R` file such that an output object will be created, that renders the map appropriately.
+
+1.3 Display the map in the `ui.R` file using an appropriate function.
+
+1.4 In the ui.R include the following controller:
+
+- A slider that is allowed to move between 5 and 20, labelled "Standard Deviation"
+
+1.5 Modify the `server.R` code such that changing the slider value changes the standard deviation of the `lat` and `lng` coordinates displayed, ensure that changing the slider affects the output map as you would expect.
+
+1.6 Publish the shiny app to the web - ensure that it works!
+
+# Exercise 2: Selected marker
+
+For this exercise you will need to refer to [http://rstudio.github.io/leaflet/](http://rstudio.github.io/leaflet/)
+
+2.1 In the `server.R` file create a new output UI element that will display the latitude and longitude coordinates of your selected points
+
+2.2 Add appropriate code to the `ui.R` file such that this output object will be displayed.
+
+2.3 Publish the shiny app to the web - ensure that it works!

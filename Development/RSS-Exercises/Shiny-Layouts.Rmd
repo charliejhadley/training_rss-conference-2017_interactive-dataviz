@@ -1,0 +1,44 @@
+---
+title: "Exercises: Laying out Shiny Apps"
+output: pdf_document
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=10, fig.height=6, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+\begin{center}
+\section{Exercises: Laying out Shiny Apps}
+\end{center}
+
+
+# Overview of Exercises
+
+These exercises introduce the various options available to you in laying out Shiny apps and consolidate the shiny app syntax.
+
+You could reasonably continue within the same project as the last set of exercises.
+
+# Exercise 1: sidebarLayout
+
+1.1 Continue with the code from the last exercise, or simply duplicate and start a new project
+
+1.2 Add a `sidebarLayout` to the `ui.R` file such that the slider you created (and the selected map coordinates, if completed) are shown to the left of map.
+
+# Exercise 2: tabsetPanel
+
+2.1 Add a `tabsetPanel` into the shiny app, with the leaflet map in the first tab.
+
+2.2 Add a second `htmlwidget` (using a different library) from the earlier set of examples into the second tab of the `tabsetPanel`.
+
+2.3 Publish the shiny app to the web - ensure that it works!
+
+
+# Exercise 3: navbarPage
+
+3.1 Replace the fluidPage with a `navbarPage`, ensure the page with the `tabsetPanel` you've just created is shown when the app first loads.
+
+3.2 Add a second tab to the `navbarPage` called "About" and add some "lorem ipsum" about the app.
+
+3.3 You can republish this again for a sense of accomplishment, but previous requests to "publish and ensure it works!" are designed to ensre you've not missed out an important step. If you have a the `navbarPage` displaying correctly on your machine, congratulations I think you're ahead of the majority of people who have tried to use Shiny before!
+

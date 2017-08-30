@@ -1,6 +1,8 @@
 ---
 title: "Shiny Basics"
-output: slidy_presentation
+output:
+  slidy_presentation:
+    theme: default
 runtime: shiny
 css: "www/teachingnotes.css"
 ---
@@ -12,7 +14,7 @@ Shiny is a "self-contained" web framework for building interactive web elements 
 Why might you want to use Shiny?
 
 <div class="incremental"> 
-`htmlwidgets` allow you to create **isolated** visualisations, with Shiny you can build highly interactive web applications including inter-dependent visualiations and pull-down menus.
+`htmlwidgets` allow you to create **isolated** visualisations, with Shiny you can build highly interactive web applications including inter-dependent visualiations and a whole host of different types of controls.
 
 Here are some examples of what you can build, moving from simple to complicated:
 
@@ -26,7 +28,7 @@ Here are some examples of what you can build, moving from simple to complicated:
 
 To build Shiny apps on your local machine you need to install the necessary machinery for the web framework - all of which is contained within the `shiny` library.
 
-When a Shiny app is running on your local machine a web-server allows you to interact with the application - to deploy Shiny apps to the web you need to have Shiny Server running somewhere.
+When a Shiny app is running on your local machine a local web-server allows you to interact with the application - to deploy Shiny apps to the web you need to have Shiny Server running somewhere.
 
 ## Shiny apps shared on the web
 
@@ -40,7 +42,7 @@ BUT.
 
 ## Shiny apps shared on the web
 
-shinyapps.io is a hosted solution for sharing Shiny apps on the web, run by RStudio.
+[shinyapps.io](shinyapps.io) is a hosted solution for sharing Shiny apps on the web, run by RStudio.
 
 There's a free tier of the service available and that's what we're going to be using later in this course.
 
@@ -51,11 +53,11 @@ Before that - let's introduce the basic syntax and mechanics of a Shiny app.
 RStudio includes two templates for creating Shiny apps which are available from File -> New, however these are fairly advanced templates to begin with.
 
 <div class="row">
-  <div class="col-md-3"><center><img src="images/shiny_templates_menubar.png" width = "100%" alt = Beamer/></center></div>
   <div class="col-md-1"></div>
+  <div class="col-md-3"><center><img src="images/shiny_templates_menubar.png" width = "100%" alt = Beamer/></center></div>
   <div class="col-md-8"><center><img src="images/shiny_templates_dialog.png" width = "50%" alt = Beamer/></center></div>
 </div>
-
+<br>
 It is also important to identify the difference between "single-file" and "multi-file" apps:
 
 >- Single-file apps are easy to write small interactive examples, but cannot [easily] be deployed to shinyapps.io
@@ -79,19 +81,19 @@ shinyApp(
 )
 ```
 
-## How Shiny works
+## How Shiny works (I)
 
 <center><img src="images/shiny_multiple_files.png" width = "100%" alt = Beamer/></center>
 
-## How Shiny works
+## How Shiny works (II)
 
 <center><img src="images/shiny_multiple_files_input.png" width = "100%" alt = Beamer/></center>
 
-## How Shiny works
+## How Shiny works (III)
 
 <center><img src="images/shiny_multiple_files_output.png" width = "100%" alt = Beamer/></center>
 
-## render* and output*
+## render* and output* (IIII)
 
 Every type of output you wish to display in a shiny app has a corresponding rendering function:
 
@@ -149,16 +151,6 @@ All accounts have a limited number of "active hours" - this is the time during w
 <div class="incremental">
 <center><img src="images/disconnected_shinyapps-io.png" width = "100%" alt = Beamer/></center>
 </div>
-
-## shinyapps.io: Comments on active hours
-
-Apps can quickly become popular, but not as popular as you might fear. If you do want to pay for an account, always start small.
-
-The Interactive Data Network is paying for a Professional tier and has not gone over 500 active hours in a single month.
-
-The most popular app we've published is for the Online Labour Index which was covered in the Guardian and a few other news sources, but only racked up 106 active hours during that time.
-
-<a href="http://ilabour.oii.ox.ac.uk/online-labour-index/"><img src="images/online_labour_index.png" width = "100%" alt = Beamer/></a>
 
 ## Exercises (publishing: 10 mins)
 

@@ -1,7 +1,8 @@
 ---
 title: "Getting data into and ready for the tidyverse"
-output: slidy_presentation
-runtime: shiny
+output:
+  slidy_presentation:
+    theme: default
 css: "www/teachingnotes.css"
 ---
 
@@ -78,9 +79,9 @@ Many tutorials make use of very small, simple datasets like the following:
 knitr::kable(head(mtcars))
 ```
 
-> Simple datasets are fine, but they are radically different from the data that you find in the real world.
+- Simple datasets are fine, but they are radically different from the data that you find in the real world.
 
-> Real data is messy, incomplete and inconsistent. I feel it's really important to work with real datasets where possible.
+- Real data is messy, incomplete and inconsistent. I feel it's really important to work with real datasets where possible.
 
 ## Our dataset
 
@@ -97,7 +98,7 @@ Let's create a data-clean.R file in the /data-raw folder and use this to build a
 
 ## Importing the data using tidyverse
 
-Flat files like our journeys.csv file are imported into R using the readr library - part of the core tidyverse.
+Flat files like our journeys.csv file are imported into R using the `readr` library - part of the core tidyverse.
 
 To import our file we can simply write:
 
@@ -107,7 +108,7 @@ library("tidyverse")
 journeys <- read_csv("data-raw/journeys.csv")
 ```
 
-readr is extremely helpful and prints us a summary of how it's intepreted each of our columns in the console.
+`readr` is extremely helpful and prints us a summary of how it's intepreted each of our columns in the console.
 
 ## Splitting locations into country and city
 
@@ -117,7 +118,7 @@ The start.location and end.location columns contain (at least) two pieces of inf
 - City
 - State
 
-We're going to use the dplyr library to split these columns up with the *separate* verb.
+We're going to use the `dplyr` library to split these columns up with the *separate* verb.
 
 ## Separate pipe chain
 
@@ -128,11 +129,11 @@ journeys %>%
   separate(start.location, into = c("start.country", "start.city"))
 ```
 
-Before we address the warning messages from our verb, let's ensure recap the pipe operator.
+Before we address the warning messages from our verb, let's cover the pipe operator.
 
 ## What is %>%?
 
-The %>% [pipe operator] is an intrinsic part of the tidyverse and pretty much every single htmlwidget library is designed with them in mind.
+The `%>%` [pipe operator] is an intrinsic part of the tidyverse and pretty much every single htmlwidget library is designed with them in mind.
 
 For an example of why we want to use pipes, I'll borrow the [following example](https://twitter.com/AmeliaMN/status/748193609401327616) from Hadley Wickham:
 
@@ -170,7 +171,7 @@ foo_foo %>%
 ```
 </div>
 
-# Simpler %>% example
+## Simpler %>% example
 
 The pipe operator takes the left-hand side of your expression and inserts it into the first argument of the right-hand side of the expression:
 
@@ -238,7 +239,7 @@ We can then add new columns that calculate values within these groups using two 
 
 The tidyverse has a vast array of very powerful verbs, we're using a tiny subset of them here.
 
-To learn more I'll re-recommend the resources I've mentioned previously:
+These are excellent resources for an introduction to the tidyverse family of verbs:
 
 - [r4ds.had.co.nz](r4ds.had.co.nz): Online version of R for Data Science by Garrett Grolemund & Hadley Wickham
 - [RStudio Cheats Sheets](https://www.rstudio.com/resources/cheatsheets/): Excellent, printable (!) resources which are also baked into RStudio (Help -> Cheatsheets)

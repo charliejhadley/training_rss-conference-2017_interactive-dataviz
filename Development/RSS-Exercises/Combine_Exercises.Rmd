@@ -1,0 +1,57 @@
+---
+title: "Exercises"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- htmlwidget and syntax: script files !-->
+```{r child = 'htmlwidgets.Rmd'}
+```
+
+\pagebreak
+<!-- RMarkdown: no script files !-->
+```{r child = 'RMarkdown.Rmd'}
+```
+
+\pagebreak
+<!-- Shiny Basics: script files !-->
+```{r child = 'ShinyBasics_basic.Rmd'}
+```
+
+\pagebreak
+<!-- Shiny Publishing: script files !-->
+```{r child = 'ShinyBasics_publishing.Rmd'}
+```
+
+\pagebreak
+<!-- Shiny htmlwidgets: script files !-->
+```{r child = 'ShinyBasics_htmlwidgets.Rmd'}
+```
+
+\pagebreak
+<!-- Shiny Layouts: no script files !-->
+```{r child = 'Shiny-Layouts.Rmd'}
+```
+
+
+\pagebreak
+<!-- Shiny Reactivity: no script files !-->
+```{r child = 'Shiny_reactivity.Rmd'}
+```
+
+\pagebreak
+<!-- Shiny renderUI: no script files !-->
+```{r child = 'Shiny_renderUI.Rmd'}
+```
+
+<!-- \pagebreak -->
+<!-- <!-- Shiny in RMarkdown: no script files !--> -->
+<!-- ```{r child = 'Shiny_in_Rmd.Rmd'} -->
+<!-- ``` -->
+
+
+
+

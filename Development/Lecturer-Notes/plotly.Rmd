@@ -1,8 +1,8 @@
 ---
 title: "Plotly"
-output: 
-  slidy_presentation
-runtime: shiny
+output:
+  slidy_presentation:
+    theme: default
 css: "www/teachingnotes.css"
 ---
 
@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 
 ## Plotly
 
-Plotly is an excellent tool for creating interactive charts, plots and other visualisations. The underlying JavaScript library is called plotly.js, it's also useful to know that it's developers provide a point-and-click service for building charts at [plot.ly](plot.ly).
+Plotly is an excellent tool for creating interactive charts, plots and other visualisations. 
+
+The underlying JavaScript library is called plotly.js, it's also useful to know that it's developers provide a point-and-click service for building charts at [plot.ly](plot.ly).
 
 ## Plotly and ggplot2 (I)
 
@@ -28,7 +30,7 @@ Plotly's super power of converting ggplot2 visualisations into interactive visua
 
 If you're unfamiliar with ggplot2, it's an extraudinarily powerful "grammar of graphics" for creating static charts.
 
-It's very much dependent on correctly using factors, for a streamlined approach to working with factors I thoroughly recommend loading the tidyverse library `forcats`
+It's very much dependent on correctly using factors. For a streamlined approach to working with factors I thoroughly recommend loading the tidyverse library `forcats`
 
 ```{r, eval=TRUE}
 library("tidyverse")
@@ -47,7 +49,9 @@ starwars %>%
 
 ## Plotly and ggplot2 (III)
 
-This static chart can be made interactive simply by providing it to `ggplotly`:
+This static chart can be made interactive simply by providing it to `ggplotly`.
+
+However, this functionaliry 
 
 ```{r, eval = TRUE}
 library("tidyverse")
@@ -87,7 +91,7 @@ continent_mean_pop_growth <- gapminder %>%
   group_by(continent, year) %>%
   summarise(mean.pop = mean(pop))
 
-continent_mean_pop_growth %>%
+plotly_cont_mean_pop <- continent_mean_pop_growth %>%
   plot_ly() %>%
   add_trace(x = ~year,
             y = ~mean.pop,
@@ -95,16 +99,20 @@ continent_mean_pop_growth %>%
             type = "scatter",
             mode = "lines+markers") %>%
   layout(xaxis = list(title = "Year"),
-         yaxis = list(title = "Mean Population of Continent"),
-         title = "Mean population of continents over time (source: Gapminder)")
+         yaxis = list(title = "Mean population of countries in continent"),
+         title = "Mean population of countries within each continent over time (source: Gapminder)")
+plotly_cont_mean_pop
 ```
 
+
+<br>
 Steps required:
 
 - Calculate mean continental population
 - Create a plotly chart
 - Add sugar
 
+<br>
 Additional information:
 
 - plot_ly() instantiates a plotly object
@@ -130,7 +138,7 @@ end_location_frequencies <- journeys %>%
   ungroup() %>%
   mutate(end.city = fct_reorder(end.city, n))
 
-end_location_frequencies %>%
+my_plotly <- end_location_frequencies %>%
   plot_ly(width = "100%") %>%
   add_trace(
     y = ~end.city,
@@ -141,6 +149,7 @@ end_location_frequencies %>%
          xaxis = list(title = "Number of observations"),
          yaxis = list(title = ""),
          title = "Receive city incidence in the journeys dataset")
+my_plotly
 ```
 
 ## Learning more about leaflet

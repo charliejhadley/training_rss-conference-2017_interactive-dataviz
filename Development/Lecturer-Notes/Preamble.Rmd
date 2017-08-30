@@ -1,6 +1,8 @@
 ---
 title: "Creating Interactive Visualisations Using R and Shiny"
-output: slidy_presentation
+output:
+  slidy_presentation:
+    theme: default
 runtime: shiny
 css: "www/teachingnotes.css"
 ---
@@ -20,28 +22,19 @@ The course will follow this general structure:
 
 ```{r}
 timetable <- list(
-  "09:30 - 10:00" = "Preamble",
-  "10:00 - 10:20" = "htmlwidget overview",
-  "10:20 - 10:40" = "htmlwidget exercises",
-  "10:40 - 10:50" = "Coffee",
-  "10:50 - 11:20" = "RMarkdown Overview",
-  "11:20 - 11:40" = "RMarkdown Exercises",
-  "11:40 - 12:00" = "RPubs Deployment",
-  "12:00 - 13:00" = "LUNCH",
-  "13:00 - 13:30" = "Shiny Basics",
-  "13:30 - 13:50" = "Shiny Exercises (Basic)",
-  "13:50 - 14:10" = "Shiny Layouts",
-  "14:10 - 14:30" = "Shiny Exercises (Layouts)",
-  "14:30 - 15:00" = "Coffee",
-  "15:00 - 15:30" = "Reactivity and renderUI Overview",
-  "15:30 - 16:00" = "Reactivity Exercises",
-  "16:00 - 16:30" = "Advice on designing Shiny Apps",
-  "16:30 - 17:00" = "Add Shiny app to RMarkdown presentation"
+  "10:00 - 11:00" = "Getting started with R and the tidyverse",
+  "11:00 - 11:30" = "Coffee",
+  "11:30 - 12:30" = "Interative visualisations with htmlwidgets",
+  "12:30 - 14:00" = "Lunch",
+  "14:00 - 15:00" = "Interactive reports with RMarkdown",
+  "15:00 - 15:30" = "Coffee",
+  "15:30 - 17:00" = "Interactive dashboards with Shiny"
 )
-timetable <- do.call(rbind.data.frame, timetable)
-timetable$times <- rownames(timetable)
-colnames(timetable) <- c("Times","Topic")
-rownames(timetable) <- NULL
+library("tidyverse")
+timetable <- tibble(
+  times = names(timetable),
+  topic = as.character(timetable)
+)
 knitr::kable(timetable)
 ```
 
@@ -166,9 +159,7 @@ This course covers the following topics:
 
 - Building interactive maps, networks and charts using htmlwidgets
 
-<div class="incremental"> 
 - Writing documents/presentations using RMarkdown; including text, code and interactive output in the same document
-</div>
 
 # RPubs
 
@@ -193,11 +184,9 @@ This course covers the following topics:
 
 - Writing documents/presentations using RMarkdown; including text, code and interactive output in the same document
 
-<div class="incremental"> 
 - Build interactive web applications using Shiny for exploring datasets using htmlwidget visualisations, without any* knowledge of HTML or JavaScript
 
 *for complicated things, you might need a little bit of CSS/HTML/JavaScript
-</div>
 
 # Basic Shiny Example
 

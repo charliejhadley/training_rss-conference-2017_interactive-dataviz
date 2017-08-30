@@ -6,3 +6,7 @@
 # plotly
 # datatable
 # RMarkdown
+# Shiny_Basics
+# Shiny_layouts
+# reactivity_and_renderUI
+# Shiny_Advice
