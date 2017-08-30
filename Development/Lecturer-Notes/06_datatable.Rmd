@@ -1,0 +1,81 @@
+---
+title: "Datatables"
+output:
+  slidy_presentation:
+    theme: default
+css: "www/teachingnotes.css"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	eval = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	include = TRUE
+)
+```
+
+## Displaying data with datatables
+
+Datatable JS is one of the most popular libraries for creating interactive, responsively designed tables on the web.
+
+Often it is crucial to display your actual raw data as a table, and to make it downloadable as a .csv/.xlsx easily. Here are two examples of where I've found this to be the case:
+
+- [Oxford Roman Economy Project - Shipwrecks Database](https://livedataoxford.shinyapps.io/1499182601-r5pqgdongyjr1qo/)
+- [HBV Epitopes Database](http://www.expmedndm.ox.ac.uk/hepitopes)
+
+## Using datatable to display data (I)
+
+Let's load up the datatable-and-the-journey.RProj project from RSS_handouts folder and visualise the journeys dataset.
+
+To create a table, we simply use:
+
+```{r}
+library("DT")
+datatable(journeys)
+```
+
+Let's create a table with the following specifications:
+
+- Show only the start and end locations, date, and number of letters sent
+- Remove periods from the column names
+- Hide the row names
+
+## Using datatable to display data (II)
+
+Datatables include by default the following elements:
+
+- Show X entries
+- The table
+- Pagination info
+- Pagination
+
+We can change which elements appear (and it what order) using the `dom` argument of options:
+
+```{r}
+datatable(journeys,
+          options = list(
+            dom = "iftlp"
+          ))
+```
+
+## Customising column appearance
+
+There are a number of utility functions for customising individual columns, these are used very similarly to one another:
+
+```{r}
+journeys %>%
+  select(start.location,
+         end.location,
+         date,
+         number.of.letters) %>%
+  datatable(filter = "top",
+            options = list(dom = "iftlp")) %>%
+  formatCurrency("number.of.letters", currency = "$", mark = ",") %>%
+  formatStyle("date", fontWeight = "bold")
+```
+
+## Learning more about DT
+
+I thoroughly recommend this website maintained by the developers of the DT htmlwidget (RStudio!): [rstudio.github.io/DT](https://rstudio.github.io/DT)
+

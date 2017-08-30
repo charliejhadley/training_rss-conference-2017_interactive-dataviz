@@ -1,0 +1,256 @@
+---
+title: "Getting data into and ready for the tidyverse"
+output:
+  slidy_presentation:
+    theme: default
+css: "www/teachingnotes.css"
+---
+
+## Getting things right from the beginning
+
+If you want to have a good time in R, it's sensible to get things right from the beginning - to structure your work/data in a way that's as easy as possible to work with.
+
+Many users of R begin their work with:
+
+```{r, eval=FALSE, include=TRUE}
+setwd("/Users/martinjhnhadley/GoogleDrive/courses/interactive-stat-viz")
+```
+
+
+This is a bad way to start.
+
+## Make your code as transportable as possible
+
+Explicitly setting working directories makes it difficult for others to run your code, particularly if they are running a different operating system.
+
+Thankfully, RStudio has a great feature called "projects" which handle setting your working directory for you.
+
+## RStudio projects
+
+Projects provide a useful mechanic for clearly distinguishing between different work packages/projects. Working with projects provides the following advantages:
+
+>- Working directories are set as the project directory
+>- The project directory can easily be explored through a GUI
+>- Easily switch between Projects from the Project menu.
+
+## Creating RStudio projects
+
+Whenever you start a new project at work, start a new project in RStudio.
+
+1. File -> New Project OR the Projects menu in the top-right of the screen
+
+<center><img src="images/projects-menu-200.png" width = "500px" alt = RMarkdown-Documents/></center>
+
+2. Choose "New Directory" and "Empty Project" 
+
+3. Browse to where your R projects will live
+
+4. Give your project a sensible name, like "wrangling-tutorial"
+
+## Organising your data
+
+Well organised projects have two data folders:
+
+- data-raw/ which contains your raw, messy, and non-anonymised data. It should also contain scripts for cleaning and tidying your data, the outputs of which should be written into the data folder
+
+- data which contains the version of your data you're happy to share
+
+Following this advice ensures you never accidentally your original data, because it's read-only. Plus, your anonymisation process is now fully self-contained and easily removed before publication.
+
+## Reproducability Everywhere
+
+Making your own lives easier when working in R is only a good thing and you're helping others for free!
+
+There are lots of bad practices people pick up and never invest enough time in considering the benefits of fixing.
+
+One of these in the naming of files (particularly data files), and I'd like to refer you to these excellent slides from @JennyBryan:
+
+[https://speakerdeck.com/jennybc/how-to-name-files](https://speakerdeck.com/jennybc/how-to-name-files)
+
+## Reading csvs and tidying them up
+
+In the handouts folder you'll find a folder called "wrangling-tutorial", let's turn that into a project together that we can start working with.
+
+## Example datasets
+
+Many tutorials make use of very small, simple datasets like the following:
+
+```{r}
+knitr::kable(head(mtcars))
+```
+
+- Simple datasets are fine, but they are radically different from the data that you find in the real world.
+
+- Real data is messy, incomplete and inconsistent. I feel it's really important to work with real datasets where possible.
+
+## Our dataset
+
+Through the next few activities and topics we’ll be using a dataset that is loosely based on my work with Felix Krawatzek that he wrote about here:
+
+https://theconversation.com/writing-home-how-german-immigrants-found-their-place-in-the-us-53342
+
+The actual underlying data is unpublished as of August 2017 but will be made available here:
+https://doi.org/10.6084/m9.figshare.4516772
+
+## Getting a feel for a data
+
+Let's create a data-clean.R file in the /data-raw folder and use this to build an understanding of what our data looks like - and create a cleaner version of the data to eventually export into the /data folder.
+
+## Importing the data using tidyverse
+
+Flat files like our journeys.csv file are imported into R using the `readr` library - part of the core tidyverse.
+
+To import our file we can simply write:
+
+```{r, eval=FALSE}
+library("tidyverse")
+
+journeys <- read_csv("data-raw/journeys.csv")
+```
+
+`readr` is extremely helpful and prints us a summary of how it's intepreted each of our columns in the console.
+
+## Splitting locations into country and city
+
+The start.location and end.location columns contain (at least) two pieces of information:
+
+- Country
+- City
+- State
+
+We're going to use the `dplyr` library to split these columns up with the *separate* verb.
+
+## Separate pipe chain
+
+Tidyverse operations are almost always written as a sequence of pipes:
+
+```{r, eval=FALSE}
+journeys %>%
+  separate(start.location, into = c("start.country", "start.city"))
+```
+
+Before we address the warning messages from our verb, let's cover the pipe operator.
+
+## What is %>%?
+
+The `%>%` [pipe operator] is an intrinsic part of the tidyverse and pretty much every single htmlwidget library is designed with them in mind.
+
+For an example of why we want to use pipes, I'll borrow the [following example](https://twitter.com/AmeliaMN/status/748193609401327616) from Hadley Wickham:
+
+<div class="incremental">  
+> Little bunny Foo Foo </br>
+> Went hopping through the forest </br>
+> Scooping up the field mice </br>
+> And bopping them on the head </br>
+</div>
+
+<div class="incremental">  
+```{r, eval=FALSE}
+foo_foo <- little_bunny()
+```
+</div>
+
+<div class="incremental">  
+```{r, eval=FALSE}
+bop_on(
+  scoop_up(
+    hop_through(foo_foo, forest),
+    field_mouse
+  ),
+  head
+)
+```
+</div>
+
+<div class="incremental">  
+```{r, eval=FALSE}
+foo_foo %>%
+  hop_through(forest) %>%
+  scoop_up(field_mouse) %>%
+  bop_on(head)
+```
+</div>
+
+## Simpler %>% example
+
+The pipe operator takes the left-hand side of your expression and inserts it into the first argument of the right-hand side of the expression:
+
+<div class="incremental">  
+```{r, eval = FALSE}
+"cats" %>% rep(4)
+```
+</div>
+
+<div class="incremental">  
+In some cases you don't want the left-hand side in the first argument, you can explicitly shove it somewhere else by using a period
+</div>
+
+<div class="incremental"> 
+```{r, eval = FALSE}
+"cats" %>% paste("too","many", .)
+```
+</div>
+<p>
+<div class="incremental"> 
+The `%>%` operator comes from the `magrittr` library and can be read about more [here](http://magrittr.tidyverse.org/). While it is often incredibly useful, it is not a hammer to be used without exception - some code is both harder to write and code with pipes.
+</div>
+
+<div class="incremental"> 
+Also - you're allowed to hate pipes. That's fine.
+</div>
+
+## Back to separating columns
+
+Our pipe chain from before simply inserted our tibble into the separate verb, but why the error messages?
+
+```{r, eval=FALSE}
+journeys %>%
+  separate(start.location, into = c("start.country", "start.city"))
+```
+
+Well, let's extract out those rows with errors using the `slice` verb and work on the problem together.
+
+## Counting observations
+
+Now we've split the start.location column up, we can start to summarise and understand our data.
+
+If we simply wanted to count the number of observations in each unique country, we could do the following:
+
+```{r, eval=FALSE}
+journeys %>%
+  count(start.country)
+```
+
+## Grouping data
+
+Count is only useful for tallying observations, to categorically summarise your data more flexibly you should use the group_by verb:
+
+```{r, eval=FALSE}
+journeys %>%
+  group_by(start.country)
+```
+
+We can then add new columns that calculate values within these groups using two different verbs:
+
+- mutate
+- summarise
+
+## The universe of verbs
+
+The tidyverse has a vast array of very powerful verbs, we're using a tiny subset of them here.
+
+These are excellent resources for an introduction to the tidyverse family of verbs:
+
+- [r4ds.had.co.nz](r4ds.had.co.nz): Online version of R for Data Science by Garrett Grolemund & Hadley Wickham
+- [RStudio Cheats Sheets](https://www.rstudio.com/resources/cheatsheets/): Excellent, printable (!) resources which are also baked into RStudio (Help -> Cheatsheets)
+
+## Cleaning up and exporting
+
+Let's not get further distracted with the cleaning of this data, I've provided a script that finishes tidying up this dataset for visualisation:
+
+RSS_handouts/export-code
+
+
+
+
+
