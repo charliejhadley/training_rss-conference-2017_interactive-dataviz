@@ -3,8 +3,8 @@ title: "htmlwidgets"
 output:
   slidy_presentation:
     theme: default
-runtime: shiny
 css: "www/teachingnotes.css"
+runtime: shiny
 ---
 
 ## htmlwidgets: JavaScript

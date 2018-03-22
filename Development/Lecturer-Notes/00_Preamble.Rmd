@@ -21,14 +21,35 @@ You will primarily be working in the RSS_handouts folder, by the end of the day 
 The course will follow this general structure:
 
 ```{r}
+# timetable <- list(
+#   "10:00 - 11:00" = "Getting started with R and the tidyverse",
+#   "11:00 - 11:30" = "Coffee",
+#   "11:30 - 12:30" = "Interative visualisations with htmlwidgets",
+#   "12:30 - 14:00" = "Lunch",
+#   "14:00 - 15:00" = "Interactive reports with RMarkdown",
+#   "15:00 - 15:30" = "Coffee",
+#   "15:30 - 17:00" = "Interactive dashboards with Shiny"
+#   )
+#   library("tidyverse")
+#   timetable <- tibble(times = names(timetable),
+#   topic = as.character(timetable))
+#   knitr::kable(timetable)
+
 timetable <- list(
-  "10:00 - 11:00" = "Getting started with R and the tidyverse",
-  "11:00 - 11:30" = "Coffee",
-  "11:30 - 12:30" = "Interative visualisations with htmlwidgets",
-  "12:30 - 14:00" = "Lunch",
-  "14:00 - 15:00" = "Interactive reports with RMarkdown",
-  "15:00 - 15:30" = "Coffee",
-  "15:30 - 17:00" = "Interactive dashboards with Shiny"
+  
+  "09:30 - 11:00" = "Up and Running",
+  "11:20 - 12:30" = "htmlwidgets",
+  "13:30 - 15:00" = "RMarkdown",
+  "15:20 - 16:30" = "Shiny"
+  # 
+  # 
+  # "10:00 - 11:00" = "Getting started with R and the tidyverse",
+  # "11:00 - 11:30" = "Coffee",
+  # "11:30 - 12:30" = "Interative visualisations with htmlwidgets",
+  # "12:30 - 14:00" = "Lunch",
+  # "14:00 - 15:00" = "Interactive reports with RMarkdown",
+  # "15:00 - 15:30" = "Coffee",
+  # "15:30 - 17:00" = "Interactive dashboards with Shiny"
 )
 library("tidyverse")
 timetable <- tibble(
